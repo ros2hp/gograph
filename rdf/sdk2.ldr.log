@@ -1,0 +1,145 @@
+Argument: table: GoGraph02.sdk2.asz
+Argument: env: dev
+Argument: stats: 0
+Argument: inputfile: ../data/generated-fullsize.rdf
+Argument: concurrent: 8
+Argument: showsql: 0
+Argument: debug: 
+Argument: graph: Movies
+Argument: reduced logging: 1
+Argument: bypass db load: 0
+Region =  us-east-1
+Successfully pinged database..
+
+ no error 
+*** create new logr for prefix: [main]
+create new alert logr for prefix:  grmgr
+*** create new logr for prefix: [grmgr]
+create new alert logr for prefix:  DB
+*** create new logr for prefix: [DB]
+create new alert logr for prefix:  errlog: 
+*** create new logr for prefix: [errlog: ]
+ ==================== ERRORS : 0	==============
+edge dump..... 166
+
+
+monitor: []interface {}{interface {}(nil), interface {}(nil), interface {}(nil), interface {}(nil), interface {}(nil), interface {}(nil), interface {}(nil), interface {}(nil), interface {}(nil), interface {}(nil)}
+============= Operation Stats ================
+capByTX     GraphName:  
+ Consumed Capacity: 
+Table: [GoGraphSS]
+CapacityUnits: Min: 1, Max: 1  Cnt: 1  Sum: 1  Avg: 1
+
+ReadCapacityUnits: 
+WriteCapacityUnits: 
+Table:
+       GoGraphSS
+           Capacity: Min: 1, Max: 1  Cnt: 1  Sum: 1  Avg: 1
+ 
+  Retrieved      GoGraphSS
+     Min: 1, Max: 1  Cnt: 1  Sum: 1  Avg: 1
+ 
+ Scanned      GoGraphSS
+     Min: 1, Max: 1  Cnt: 1  Sum: 1  Avg: 1
+ 
+
+Table:  [GoGraphSS]
+Items:  map[GoGraphSS:Min: 1, Max: 1  Cnt: 1  Sum: 1  Avg: 1
+]
+Scanned:  map[GoGraphSS:Min: 1, Max: 1  Cnt: 1  Sum: 1  Avg: 1
+]
+============= Operation Stats ================
+capByTX     TyShortNames:  
+ Consumed Capacity: 
+Table: [GoGraphSS]
+CapacityUnits: Min: 1, Max: 1  Cnt: 1  Sum: 1  Avg: 1
+
+ReadCapacityUnits: 
+WriteCapacityUnits: 
+Table:
+       GoGraphSS
+           Capacity: Min: 1, Max: 1  Cnt: 1  Sum: 1  Avg: 1
+ 
+  Retrieved      GoGraphSS
+     Min: 5, Max: 5  Cnt: 1  Sum: 5  Avg: 5
+ 
+ Scanned      GoGraphSS
+     Min: 5, Max: 5  Cnt: 1  Sum: 5  Avg: 5
+ 
+
+Table:  [GoGraphSS]
+Items:  map[GoGraphSS:Min: 5, Max: 5  Cnt: 1  Sum: 5  Avg: 5
+]
+Scanned:  map[GoGraphSS:Min: 5, Max: 5  Cnt: 1  Sum: 5  Avg: 5
+]
+============= Operation Stats ================
+capByTX     LoadDataDictionary:  
+ Consumed Capacity: 
+Table: [GoGraphSS]
+CapacityUnits: Min: 1, Max: 1  Cnt: 1  Sum: 1  Avg: 1
+
+ReadCapacityUnits: 
+WriteCapacityUnits: 
+Table:
+       GoGraphSS
+           Capacity: Min: 1, Max: 1  Cnt: 1  Sum: 1  Avg: 1
+ 
+  Retrieved      GoGraphSS
+     Min: 16, Max: 16  Cnt: 1  Sum: 16  Avg: 16
+ 
+ Scanned      GoGraphSS
+     Min: 16, Max: 16  Cnt: 1  Sum: 16  Avg: 16
+ 
+
+Table:  [GoGraphSS]
+Items:  map[GoGraphSS:Min: 16, Max: 16  Cnt: 1  Sum: 16  Avg: 16
+]
+Scanned:  map[GoGraphSS:Min: 16, Max: 16  Cnt: 1  Sum: 16  Avg: 16
+]
+============= Operation Stats ================
+capByTX     SaveNode:  
+ Consumed Capacity: 
+Table: [GoGraph02.sdk2.asz]
+CapacityUnits: Min: 2, Max: 8  Cnt: 316667  Sum: 1.435393e+06  Avg: 4.532815228615549
+
+ReadCapacityUnits: 
+WriteCapacityUnits: 
+Table:
+       GoGraph02.sdk2.asz
+           Capacity: Min: 1, Max: 4  Cnt: 316667  Sum: 837096  Avg: 2.643458270043926
+ 
+GSI: TyES
+           Capacity: Min: 1, Max: 1  Cnt: 77867  Sum: 77867  Avg: 1
+ 
+GSI: P_S
+           Capacity: Min: 1, Max: 2  Cnt: 197408  Sum: 203764  Avg: 1.0321972767061112
+ 
+GSI: TyIX
+           Capacity: Min: 1, Max: 1  Cnt: 316666  Sum: 316666  Avg: 1
+ 
+ 
+Table:  [GoGraph02.sdk2.asz]
+Items:  map[]
+Scanned:  map[]
+============= Table Stats ================
+CapByTable      GoGraphSS:  
+       Capacity: Min: 1, Max: 1  Cnt: 3  Sum: 3  Avg: 1
+
+============= Table Stats ================
+CapByTable      GoGraph02.sdk2.asz:  
+       Capacity: Min: 1, Max: 4  Cnt: 316667  Sum: 837096  Avg: 2.643458270043926
+
+=============  GSI Stats ================
+CapByGSI      TyIX:  
+       Capacity: Min: 1, Max: 1  Cnt: 316666  Sum: 316666  Avg: 1
+
+=============  GSI Stats ================
+CapByGSI      TyES:  
+       Capacity: Min: 1, Max: 1  Cnt: 77867  Sum: 77867  Avg: 1
+
+=============  GSI Stats ================
+CapByGSI      P_S:  
+       Capacity: Min: 1, Max: 2  Cnt: 197408  Sum: 203764  Avg: 1.0321972767061112
+
+Completed.....Duration: ToClose: 4m44.332606372s  ToEnd: 7m8.610068762s
+syslog STOP

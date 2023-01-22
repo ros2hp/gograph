@@ -1,0 +1,50 @@
+  
+{
+    "AttributeDefinitions": [
+        {
+            "AttributeName": "PKey", 
+            "AttributeType": "B"
+        },
+        {
+            "AttributeName": "SortK", 
+            "AttributeType": "S"
+        },
+        {
+            "AttributeName": "P", 
+            "AttributeType": "S"
+        },
+        {
+            "AttributeName": "S", 
+            "AttributeType": "S"
+        }
+    ], 
+    "KeySchema": [
+        {
+            "AttributeName": "PKey", 
+            "KeyType": "HASH"
+        },
+        {
+            "AttributeName": "SortK", 
+            "KeyType": "RANGE"
+        }
+    ],
+    "BillingMode":  "PAY_PER_REQUEST",
+    "GlobalSecondaryIndexes": [
+        { "IndexName": "P_S", 
+            "KeySchema": [
+                {
+                    "AttributeName": "P", 
+                    "KeyType": "HASH"
+                },
+                {
+                    "AttributeName": "S", 
+                    "KeyType": "RANGE"
+                }
+            ], 
+             "Projection": {
+                "ProjectionType": "INCLUDE",
+                "NonKeyAttributes" : [ "Ty" ]
+            }
+        }
+    ]
+}

@@ -1,0 +1,33 @@
+Argument: table: GoGraph.dev.3-restored
+Argument: batch size: 100
+Argument: stats: 0
+Argument: env: prd
+Argument: debug: 
+Argument: concurrent: 4
+Argument: showsql: 0
+Argument: graph: Movies
+Argument: reduced logging: 1
+leave Log(
+Region =  us-east-1
+longnm shortnm :  Character Ch
+longnm shortnm :  Film Fm
+longnm shortnm :  Genre Ge
+longnm shortnm :  Person P
+longnm shortnm :  Performance Pf
+Previous load errored or was terminated, will now rerun
+leave Log(
+leave Log(
+leave Log(
+leave Log(
+leave Log(
+leave Log(
+leave Log(
+leave Log(
+leave Log(
+leave Log(
+leave Log(
+leave Log(
+leave Log(
+leave Log(
+leave Log(
+leave Log(

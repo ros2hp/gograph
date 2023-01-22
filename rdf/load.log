@@ -1,0 +1,150 @@
+Argument: table: GoGraph.sdk2.prd
+Argument: env: dev
+Argument: stats: 0
+Argument: inputfile: ../data/generated-fullsize.rdf
+Argument: concurrent: 10
+Argument: showsql: 0
+Argument: debug: 
+Argument: graph: Movies
+Argument: reduced logging: 1
+Argument: bypass db load: 0
+Successfully pinged database..
+
+ no error 
+*** create new logr for prefix: [main]
+create new logr for prefix:  DBExecute: 
+*** create new logr for prefix: [DBExecute: ]
+errlog Add ...
+create new logr for prefix:  saveRDF
+*** create new logr for prefix: [saveRDF]
+errlog Add ...
+errlog Add ...
+create new logr for prefix:  errlog: 
+*** create new logr for prefix: [errlog: ]
+ ==================== ERRORS : 3	==============
+saveRDF Failed to save: PKey: 7YU8Nkf8RLSDF7nChjsakg==  SortK: m|A#A#:N : Error in routine BatchWriteItem [tag: SaveNode]: System error in processing batch. Error type prevents retry of operation. [CriticalOperationErr], operation error DynamoDB: BatchWriteItem, exceeded maximum number of attempts, 3, https response error StatusCode: 400, RequestID: M7Q0TCDQ12H0NV0LQEHJS6RQ9JVV4KQNSO5AEMVJF66Q9ASUAAJG, api error ThrottlingException: Throughput exceeds the current capacity for one or more global secondary indexes. DynamoDB is automatically scaling your index so please try again shortly.
+saveRDF Failed to save: PKey: mMmCyUxASciC1bhzu0MVng==  SortK: m|A#A#:N : Error in routine BatchWriteItem [tag: SaveNode]: System error in processing batch. Error type prevents retry of operation. [CriticalOperationErr], operation error DynamoDB: BatchWriteItem, exceeded maximum number of attempts, 3, https response error StatusCode: 400, RequestID: 8Q2MLPJ5E3H3P9QI76R1UNCK7JVV4KQNSO5AEMVJF66Q9ASUAAJG, api error ThrottlingException: Throughput exceeds the current capacity for one or more global secondary indexes. DynamoDB is automatically scaling your index so please try again shortly.
+saveRDF Failed to save: PKey: lX/ssjMRTKCpKoZoqfKfvg==  SortK: m|A#A#:N : Error in routine BatchWriteItem [tag: SaveNode]: System error in processing batch. Error type prevents retry of operation. [CriticalOperationErr], operation error DynamoDB: BatchWriteItem, exceeded maximum number of attempts, 3, https response error StatusCode: 400, RequestID: D03R4MK15AOL5RG040DSNUKADFVV4KQNSO5AEMVJF66Q9ASUAAJG, api error ThrottlingException: Throughput exceeds the current capacity for one or more global secondary indexes. DynamoDB is automatically scaling your index so please try again shortly.
+edge dump..... 166
+
+
+monitor: []interface {}{interface {}(nil), interface {}(nil), interface {}(nil), interface {}(nil), interface {}(nil), interface {}(nil), interface {}(nil), interface {}(nil), interface {}(nil), interface {}(nil)}
+============= Operation Stats ================
+capByTX     GraphName:  
+ Consumed Capacity: 
+Table: [GoGraphSS]
+CapacityUnits: Min: 1, Max: 1  Cnt: 1  Sum: 1  Avg: 1
+
+ReadCapacityUnits: 
+WriteCapacityUnits: 
+Table:
+       GoGraphSS
+           Capacity: Min: 1, Max: 1  Cnt: 1  Sum: 1  Avg: 1
+ 
+  Retrieved      GoGraphSS
+     Min: 1, Max: 1  Cnt: 1  Sum: 1  Avg: 1
+ 
+ Scanned      GoGraphSS
+     Min: 1, Max: 1  Cnt: 1  Sum: 1  Avg: 1
+ 
+
+Table:  [GoGraphSS]
+Items:  map[GoGraphSS:Min: 1, Max: 1  Cnt: 1  Sum: 1  Avg: 1
+]
+Scanned:  map[GoGraphSS:Min: 1, Max: 1  Cnt: 1  Sum: 1  Avg: 1
+]
+============= Operation Stats ================
+capByTX     TyShortNames:  
+ Consumed Capacity: 
+Table: [GoGraphSS]
+CapacityUnits: Min: 1, Max: 1  Cnt: 1  Sum: 1  Avg: 1
+
+ReadCapacityUnits: 
+WriteCapacityUnits: 
+Table:
+       GoGraphSS
+           Capacity: Min: 1, Max: 1  Cnt: 1  Sum: 1  Avg: 1
+ 
+  Retrieved      GoGraphSS
+     Min: 5, Max: 5  Cnt: 1  Sum: 5  Avg: 5
+ 
+ Scanned      GoGraphSS
+     Min: 5, Max: 5  Cnt: 1  Sum: 5  Avg: 5
+ 
+
+Table:  [GoGraphSS]
+Items:  map[GoGraphSS:Min: 5, Max: 5  Cnt: 1  Sum: 5  Avg: 5
+]
+Scanned:  map[GoGraphSS:Min: 5, Max: 5  Cnt: 1  Sum: 5  Avg: 5
+]
+============= Operation Stats ================
+capByTX     LoadDataDictionary:  
+ Consumed Capacity: 
+Table: [GoGraphSS]
+CapacityUnits: Min: 1, Max: 1  Cnt: 1  Sum: 1  Avg: 1
+
+ReadCapacityUnits: 
+WriteCapacityUnits: 
+Table:
+       GoGraphSS
+           Capacity: Min: 1, Max: 1  Cnt: 1  Sum: 1  Avg: 1
+ 
+  Retrieved      GoGraphSS
+     Min: 16, Max: 16  Cnt: 1  Sum: 16  Avg: 16
+ 
+ Scanned      GoGraphSS
+     Min: 16, Max: 16  Cnt: 1  Sum: 16  Avg: 16
+ 
+
+Table:  [GoGraphSS]
+Items:  map[GoGraphSS:Min: 16, Max: 16  Cnt: 1  Sum: 16  Avg: 16
+]
+Scanned:  map[GoGraphSS:Min: 16, Max: 16  Cnt: 1  Sum: 16  Avg: 16
+]
+============= Operation Stats ================
+capByTX     SaveNode:  
+ Consumed Capacity: 
+Table: [GoGraph.sdk2.prd]
+CapacityUnits: Min: 1, Max: 8  Cnt: 316922  Sum: 1.435378e+06  Avg: 4.529120730021898
+
+ReadCapacityUnits: 
+WriteCapacityUnits: 
+Table:
+       GoGraph.sdk2.prd
+           Capacity: Min: 1, Max: 4  Cnt: 316922  Sum: 837087  Avg: 2.6413029073399765
+ 
+GSI: TyIX
+           Capacity: Min: 1, Max: 1  Cnt: 316663  Sum: 316663  Avg: 1
+ 
+GSI: TyES
+           Capacity: Min: 1, Max: 1  Cnt: 77867  Sum: 77867  Avg: 1
+ 
+GSI: P_S
+           Capacity: Min: 1, Max: 2  Cnt: 197405  Sum: 203761  Avg: 1.032197766014032
+ 
+ 
+Table:  [GoGraph.sdk2.prd]
+Items:  map[]
+Scanned:  map[]
+============= Table Stats ================
+CapByTable      GoGraphSS:  
+       Capacity: Min: 1, Max: 1  Cnt: 3  Sum: 3  Avg: 1
+
+============= Table Stats ================
+CapByTable      GoGraph.sdk2.prd:  
+       Capacity: Min: 1, Max: 4  Cnt: 316922  Sum: 837087  Avg: 2.6413029073399765
+
+=============  GSI Stats ================
+CapByGSI      TyIX:  
+       Capacity: Min: 1, Max: 1  Cnt: 316663  Sum: 316663  Avg: 1
+
+=============  GSI Stats ================
+CapByGSI      TyES:  
+       Capacity: Min: 1, Max: 1  Cnt: 77867  Sum: 77867  Avg: 1
+
+=============  GSI Stats ================
+CapByGSI      P_S:  
+       Capacity: Min: 1, Max: 2  Cnt: 197405  Sum: 203761  Avg: 1.032197766014032
+
+Completed.....Duration: ToClose: 4m54.718136154s  ToEnd: 8m11.802299295s
+syslog STOP
