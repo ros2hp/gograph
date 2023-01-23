@@ -12,34 +12,27 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/ros2hp/grmgr"
-
 	blk "github.com/ros2hp/gograph/block"
-	//dyn "github.com/ros2hp/gograph/db"
-	//dbadmin "github.com/ros2hp/gograph/db/admin"
-	"github.com/ros2hp/gograph/stats/admin"
-	dyn "github.com/ros2hp/method-db/dynamodb"
-	dbadmin "github.com/ros2hp/method-db/dynamodb/admin"
-	//"github.com/ros2hp/gograph/client"
-	//"github.com/ros2hp/gograph/db"
 	param "github.com/ros2hp/gograph/dygparam"
-	"github.com/ros2hp/gograph/monitor"
-	"github.com/ros2hp/gograph/run"
-	"github.com/ros2hp/gograph/tbl"
-	//"github.com/ros2hp/gograph/rdf/anmgr"
-	//"github.com/ros2hp/gograph/rdf/dp"
 	elog "github.com/ros2hp/gograph/errlog"
+	"github.com/ros2hp/gograph/monitor"
 	"github.com/ros2hp/gograph/rdf/ds"
 	"github.com/ros2hp/gograph/rdf/edge"
 	"github.com/ros2hp/gograph/rdf/reader"
 	"github.com/ros2hp/gograph/rdf/save"
-	"github.com/ros2hp/method-db/mysql"
-	//"github.com/ros2hp/gograph/rdf/uuid"
+	"github.com/ros2hp/gograph/run"
+	"github.com/ros2hp/gograph/stats/admin"
 	slog "github.com/ros2hp/gograph/syslog"
-	"github.com/ros2hp/method-db/db"
-	"github.com/ros2hp/method-db/tx"
-	//"github.com/ros2hp/method-db/mut"
+	"github.com/ros2hp/gograph/tbl"
 	"github.com/ros2hp/gograph/types"
+	dyn "github.com/ros2hp/method-db/dynamodb"
+	dbadmin "github.com/ros2hp/method-db/dynamodb/admin"
+
+	"github.com/ros2hp/grmgr"
+
+	"github.com/ros2hp/method-db/db"
+	"github.com/ros2hp/method-db/mysql"
+	"github.com/ros2hp/method-db/tx"
 	"github.com/ros2hp/method-db/uuid"
 )
 
@@ -174,7 +167,7 @@ func main() { //(f io.Reader) error { // S P O
 	// db.Init(ctx, &ctxEnd, []db.Option{db.Option{Name: "throttler", Val: grmgr.Control}, db.Option{Name: "Region", Val: "us-east-1"}}...)
 	// mysql.Init(ctx)
 	dyn.Register(ctx, "default", &wpEnd, []db.Option{db.Option{Name: "throttler", Val: grmgr.Control}, db.Option{Name: "Region", Val: "us-east-1"}}...)
-	mysql.Register(ctx, "mysql-ros2hp/gograph", "admin:gjIe8Hl9SFD1g3ahyu6F@tcp(mysql8.cjegagpjwjyi.us-east-1.rds.amazonaws.com:3306)/GoGraph")
+	mysql.Register(ctx, "mysql-gograph", os.Getenv("MYSQL")+"/GoGraph")
 
 	logrmDB := slog.NewLogr("mdb")
 	logrmGr := slog.NewLogr("grmgr")

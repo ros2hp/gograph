@@ -16,8 +16,8 @@ import (
 const (
 	logrFlags = log.LstdFlags | log.Lshortfile
 
-	logDir  = "/ros2hp/gograph/"
-	logName = "ros2hp/gograph"
+	logDir  = "/ros2hp/"
+	logName = "gograph"
 	idFile  = "log.id"
 )
 
@@ -160,7 +160,6 @@ func Log(prefix string, s string) {
 	out.WriteString("|info|")
 	out.WriteString(s)
 	logr.Print(out.String())
-	fmt.Println("leave Log(")
 }
 
 func LogAlert(prefix string, s string) {

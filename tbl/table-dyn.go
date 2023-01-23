@@ -17,7 +17,7 @@ type (
 )
 
 var (
-	TblName    Name = "ros2hp/gograph.Dev"
+	TblName    Name = "GoGraph.Dev"
 	Graph      Name = TblName
 	Block      Name = TblName
 	EOP        Name = TblName
@@ -28,7 +28,7 @@ var (
 
 const (
 	//
-	Type Name = "ros2hp/gographSS"
+	Type Name = "GoGraphSS"
 	//
 	Event             Name = "EV$event"
 	TaskEv            Name = "EV$task"
