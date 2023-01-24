@@ -261,9 +261,9 @@ func main() {
 	// allocate cache
 	cache.NewCache()
 
-	qetx := tx.NewQueryContext(ctx, "EdgeChild", tblEdgeChild).DB("mysql-ros2hp/gograph").Prepare()
+	qetx := tx.NewQueryContext(ctx, "EdgeChild", tblEdgeChild).DB("mysql-gograph").Prepare()
 	defer qetx.Close()
-	qptx := tx.NewQueryContext(ctx, "EdgeParent", tblEdge).DB("mysql-ros2hp/gograph").Prepare()
+	qptx := tx.NewQueryContext(ctx, "EdgeParent", tblEdge).DB("mysql-gograph").Prepare()
 	defer qptx.Close()
 
 	for {
