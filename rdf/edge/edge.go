@@ -100,9 +100,7 @@ func PowerOn(ctx context.Context, wp *sync.WaitGroup, wgEnd *sync.WaitGroup) {
 			slog.Log(logid, "Start Edge save...")
 			t0 := time.Now()
 			//etx := tx.NewTx("edge")
-			//etx := tx.New("edge").DB("mysql-ros2hp/gograph").Prepare()
-			etx := tx.NewTxContext(ctx, "edge").DB("mysql-ros2hp/gograph").Prepare()
-			//etx := tx.NewTxContext(ctx, "edge").DB("mysql-ros2hp/gograph")
+			etx := tx.NewTxContext(ctx, "edge").DB("mysql-gograph").Prepare()
 
 			for _, v := range cnt {
 
@@ -118,10 +116,7 @@ func PowerOn(ctx context.Context, wp *sync.WaitGroup, wgEnd *sync.WaitGroup) {
 						if err != nil {
 							break
 						}
-						//etx = tx.NewTx("edge")
-						//tx = tx.New("edge").DB("mysql-ros2hp/gograph").Prepare()
-						etx = tx.NewTxContext(ctx, "edge").DB("mysql-ros2hp/gograph").Prepare()
-						//etx = tx.NewTxContext(ctx, "edge").DB("mysql-ros2hp/gograph")
+						etx = tx.NewTxContext(ctx, "edge").DB("mysql-gograph").Prepare()
 						bi = 0
 					}
 					// increment batch id when number of items in current batch exceeds 150

@@ -263,7 +263,7 @@ func main() { //(f io.Reader) error { // S P O
 	ctxEnd.Add(5)
 	go uuid.PowerOn(ctx, &wpStart, &ctxEnd) // generate and store UUIDs service
 	grCfg := grmgr.Config{"runid": runid}
-	go grmgr.PowerOn(ctx, &wpStart, &wpEnd, grCfg)
+	go grmgr.PowerOn(ctx, &wpStart, &ctxEnd, grCfg)
 	//go grmgr.PowerOn(ctx, &wpStart, &ctxEnd, runid) // concurrent goroutine manager service
 	go elog.PowerOn(ctx, &wpStart, &ctxEnd)    // error logging service
 	go monitor.PowerOn(ctx, &wpStart, &ctxEnd) // repository of system statistics service
@@ -289,7 +289,7 @@ func main() { //(f io.Reader) error { // S P O
 
 	// purge state tables
 	tblEdge, tblEdgeChild := tbl.SetEdgeNames(types.GraphName())
-	etx := tx.NewTx("truncate").DB("mysql-ros2hp/gograph") // TODO: what about tx.New()
+	etx := tx.NewTx("truncate").DB("mysql-gograph") // TODO: what about tx.New()
 	etx.NewTruncate([]tbl.Name{tbl.Name(tblEdgeChild), tbl.Name(tblEdge)})
 	err = etx.Execute()
 	if err != nil {
@@ -725,7 +725,7 @@ func unmarshalRDF(ctx context.Context, node *ds.Node, ty blk.TyAttrBlock, wg *sy
 	uuid.ReqCh <- uuid.Request{SName: node.ID, RespCh: lch}
 	psn = <-lch
 	//tblEdgeChild := string(tbl.EdgeChild) + types.GraphName()
-	etx := tx.NewTxContext(ctx, "edgeChild").DB("mysql-ros2hp/gograph", db.Option{"prepare", false}, db.Option{"prepare", true}).Prepare()
+	etx := tx.NewTxContext(ctx, "edgeChild").DB("mysql-gograph", db.Option{"prepare", false}, db.Option{"prepare", true}).Prepare()
 
 	_, tblEdgeChild := tbl.SetEdgeNames(types.GraphName())
 	for _, v := range attr {
