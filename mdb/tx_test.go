@@ -40,7 +40,7 @@ type Address struct {
 	Cntry               Country
 }
 
-func TestSelect(t *testing.T) {
+func TestSelectx(t *testing.T) {
 
 	type Input struct {
 		Status byte
