@@ -1,3 +1,3 @@
-go build -tags "dynamodb filelog withdb"
+go build -tags "dynamodb filelog "
 # used to be dp1c
 mv dp2 dp

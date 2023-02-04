@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"time"
 
 	blk "github.com/ros2hp/gograph/block"
 	"github.com/ros2hp/gograph/cache"
@@ -134,9 +135,9 @@ func Propagate(ctx context.Context, limit *grmgr.Limiter, wg *sync.WaitGroup, pU
 			wgc.Add(1)
 
 			// a goroutine for embedded child uids and one for each overflow block
-			go func(oid int, rch <-chan cache.BatchPy, v blk.TyAttrD) {
+			go func(oid int, rch <-chan cache.BatchPy, v blk.TyAttrD, wg *sync.WaitGroup) {
 
-				defer wgc.Done() // annonymous func gives access to surrounding vars. Concurrent safe operation
+				defer wg.Done() // annonymous func gives access to surrounding vars. Concurrent safe operation
 				// make a grmgr label
 
 				var blimiter *grmgr.Limiter
@@ -163,7 +164,7 @@ func Propagate(ctx context.Context, limit *grmgr.Limiter, wg *sync.WaitGroup, pU
 						defer w.Done()
 
 						if bl != nil {
-							defer bl.EndR()
+							defer bl.Done()
 						}
 
 						var (
@@ -313,7 +314,7 @@ func Propagate(ctx context.Context, limit *grmgr.Limiter, wg *sync.WaitGroup, pU
 					blimiter.Unregister()
 				}
 
-			}(ii, kk, v) // by  ovfl block reader equates to channel
+			}(ii, kk, v, &wgc) // by  ovfl block reader equates to channel
 		}
 		wgc.Wait()
 
@@ -321,14 +322,14 @@ func Propagate(ctx context.Context, limit *grmgr.Limiter, wg *sync.WaitGroup, pU
 		if !ptx.HasMutations() {
 			panic(fmt.Errorf("Propagate: for %s %s", pUID, ty))
 		}
-		//	time.Sleep(30 * time.Millisecond)
-		err = ptx.Execute()
-		if err != nil {
-			panic(err)
-			if !strings.HasPrefix(err.Error(), "No mutations in transaction") {
-				elog.Add(logid, err)
-			}
-		}
+		time.Sleep(30 * time.Millisecond)
+		// err = ptx.Execute()
+		// if err != nil {
+		// 	panic(err)
+		// 	if !strings.HasPrefix(err.Error(), "No mutations in transaction") {
+		// 		elog.Add(logid, err)
+		// 	}
+		// }
 	}
 	if !found {
 		elog.Add(logid, fmt.Errorf("DP -  1:1 attribute not found for type %q in node %q ", ty, pUID))
