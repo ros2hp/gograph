@@ -7,7 +7,6 @@ import (
 	"strconv"
 	"strings"
 	"sync"
-	"time"
 
 	blk "github.com/ros2hp/gograph/block"
 	"github.com/ros2hp/gograph/cache"
@@ -16,8 +15,8 @@ import (
 	tbl "github.com/ros2hp/gograph/tbl"
 	"github.com/ros2hp/gograph/types"
 
-	//"github.com/ros2hp/grmgr"
-	"github.com/ros2hp/gograph/grmgr"
+	"github.com/ros2hp/grmgr"
+	//"github.com/ros2hp/gograph/grmgr"
 
 	"github.com/ros2hp/method-db/key"
 	"github.com/ros2hp/method-db/mut"
@@ -322,14 +321,14 @@ func Propagate(ctx context.Context, limit *grmgr.Limiter, wg *sync.WaitGroup, pU
 		if !ptx.HasMutations() {
 			panic(fmt.Errorf("Propagate: for %s %s", pUID, ty))
 		}
-		time.Sleep(30 * time.Millisecond)
-		// err = ptx.Execute()
-		// if err != nil {
-		// 	panic(err)
-		// 	if !strings.HasPrefix(err.Error(), "No mutations in transaction") {
-		// 		elog.Add(logid, err)
-		// 	}
-		// }
+		//	time.Sleep(30 * time.Millisecond)
+		err = ptx.Execute()
+		if err != nil {
+			panic(err)
+			if !strings.HasPrefix(err.Error(), "No mutations in transaction") {
+				elog.Add(logid, err)
+			}
+		}
 	}
 	if !found {
 		elog.Add(logid, fmt.Errorf("DP -  1:1 attribute not found for type %q in node %q ", ty, pUID))

@@ -26,8 +26,8 @@ import (
 	slog "github.com/ros2hp/gograph/syslog"
 	"github.com/ros2hp/gograph/tbl"
 
-	//"github.com/ros2hp/grmgr"
-	"github.com/ros2hp/gograph/grmgr"
+	"github.com/ros2hp/grmgr"
+	//"github.com/ros2hp/gograph/grmgr"
 
 	"github.com/ros2hp/method-db/db"
 	dyn "github.com/ros2hp/method-db/dynamodb"

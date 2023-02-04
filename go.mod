@@ -8,7 +8,7 @@ require (
 	github.com/aws/aws-sdk-go-v2 v1.17.3
 	github.com/aws/aws-sdk-go-v2/config v1.18.8
 	github.com/aws/aws-sdk-go-v2/service/cloudwatchlogs v1.20.0
-	github.com/ros2hp/grmgr v0.0.0-20230121220951-785c3054cfb6
+	github.com/ros2hp/grmgr v0.0.0-20230204094621-9f92c95a5658
 	github.com/ros2hp/method-db v0.0.0-20230122025526-803c4f6eb58c
 	google.golang.org/api v0.108.0
 	google.golang.org/genproto v0.0.0-20230119192704-9d59e20e5cd1
