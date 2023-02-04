@@ -26,7 +26,8 @@ import (
 	slog "github.com/ros2hp/gograph/syslog"
 	"github.com/ros2hp/gograph/tbl"
 
-	"github.com/ros2hp/grmgr"
+	//"github.com/ros2hp/grmgr"
+	"github.com/ros2hp/gograph/grmgr"
 
 	"github.com/ros2hp/method-db/db"
 	dyn "github.com/ros2hp/method-db/dynamodb"
@@ -207,9 +208,9 @@ func main() {
 	wpEnd.Add(3)
 	wpStart.Add(3)
 	//grCfg := grmgr.Config{"dbname": "default", "table": "runstats", "runid": runid}
-	grCfg := grmgr.Config{"runid": runid}
-	go grmgr.PowerOn(ctx, &wpStart, &wpEnd, grCfg) // concurrent goroutine manager service
-	go errlog.PowerOn(ctx, &wpStart, &wpEnd)       // error logging service
+	//grCfg := grmgr.Config{"runid": runid}
+	go grmgr.PowerOn(ctx, &wpStart, &wpEnd)  //, grCfg) // concurrent goroutine manager service
+	go errlog.PowerOn(ctx, &wpStart, &wpEnd) // error logging service
 	//go anmgr.PowerOn(ctx, &wpStart, &wpEnd)        // attach node service
 	go monitor.PowerOn(ctx, &wpStart, &wpEnd) // repository of system statistics service
 	wpStart.Wait()
@@ -345,7 +346,7 @@ func main() {
 		syslog(fmt.Sprintf(" No 1:1 Types found"))
 		return
 	}
-	syslog(fmt.Sprintf("Start double propagation processing...%#v", dpTy))
+	alertlog(fmt.Sprintf("Start double propagation processing...%#v", dpTy))
 
 	if restart {
 		tyState, err = getState(ctx, stateId)
@@ -390,21 +391,21 @@ func main() {
 	} else {
 		status = "C"
 	}
-	syslog(fmt.Sprintf("setLoadstatus..to %s", status))
+	alertlog(fmt.Sprintf("setLoadstatus..to %s", status))
 	err = setRunStatus(ctx, status, err)
 
 	if err != nil {
 		elog.Add("SetLoadStatus", fmt.Errorf("Error setting load status to %s: %w", status, err))
 	}
-	syslog("cancel() initiated. Waiting for DP services to shutdown...")
+	alertlog("cancel() initiated. Waiting for DP services to shutdown...")
 	cancel()
 	wpEnd.Wait()
-	syslog("All DP services shutdown.")
+	alertlog("All DP services shutdown.")
 
 	run.Finish(err)
 	tend := time.Now()
 
-	syslog(fmt.Sprintf("double propagate finished....Runid:  %q   Duration: %s", runid.Base64(), tend.Sub(tstart)))
+	alertlog(fmt.Sprintf("double propagate finished....Runid:  %q   Duration: %s", runid.Base64(), tend.Sub(tstart)))
 	time.Sleep(1 * time.Second)
 
 	// stop system logger services (if any)
@@ -412,6 +413,40 @@ func main() {
 	// stop db admin services and save to db.
 	dbadmin.Persist(runid)
 
+}
+
+func down(ctx context.Context, l *grmgr.Limiter) {
+
+	go func() {
+
+		for {
+			select {
+			case <-time.After(12 * time.Second):
+				l.Down()
+			case <-ctx.Done():
+				alertlog("down Shutdown.")
+				return
+			}
+		}
+
+	}()
+}
+
+func up(ctx context.Context, l *grmgr.Limiter) {
+
+	go func() {
+
+		for {
+			select {
+			case <-time.After(20 * time.Second):
+				l.Up()
+			case <-ctx.Done():
+				alertlog("up Shutdown.")
+				return
+			}
+		}
+
+	}()
 }
 
 //type PKey []byte
@@ -532,6 +567,10 @@ func DP(ctx context.Context, ty string, id uuid.UID, restart bool, has11 map[str
 
 	limiterDP := grmgr.New("dp", *parallel)
 
+	// ctx2, cancel := context.WithCancel(context.Background())
+	// up(ctx2, limiterDP)
+	// down(ctx2, limiterDP)
+
 	// blocking call..
 	err := ptx.ExecuteByFunc(func(ch_ interface{}) error {
 
@@ -562,6 +601,7 @@ func DP(ctx context.Context, ty string, id uuid.UID, restart bool, has11 map[str
 		return nil
 	})
 
+	cancel()
 	limiterDP.Unregister()
 
 	return err

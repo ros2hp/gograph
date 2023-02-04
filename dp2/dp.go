@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"time"
 
 	blk "github.com/ros2hp/gograph/block"
 	"github.com/ros2hp/gograph/cache"
@@ -15,7 +16,8 @@ import (
 	tbl "github.com/ros2hp/gograph/tbl"
 	"github.com/ros2hp/gograph/types"
 
-	"github.com/ros2hp/grmgr"
+	//"github.com/ros2hp/grmgr"
+	"github.com/ros2hp/gograph/grmgr"
 
 	"github.com/ros2hp/method-db/key"
 	"github.com/ros2hp/method-db/mut"
@@ -152,19 +154,17 @@ func Propagate(ctx context.Context, limit *grmgr.Limiter, wg *sync.WaitGroup, pU
 
 					py := py
 					if blimiter != nil {
-
-						blimiter.Ask()
-						<-blimiter.RespCh()
+						blimiter.Control()
 					}
 					wgd.Add(1)
 
 					// goroutine for DP - upto 2 concurrently on for each ovflblock batch (see blimiter above) TODO: make as parameter
-					go func(py cache.BatchPy, v blk.TyAttrD) {
+					go func(py cache.BatchPy, v blk.TyAttrD, bl *grmgr.Limiter, w *sync.WaitGroup) {
 
-						defer wgd.Done()
+						defer w.Done()
 
-						if blimiter != nil {
-							defer blimiter.EndR()
+						if bl != nil {
+							defer bl.EndR()
 						}
 
 						var (
@@ -306,7 +306,7 @@ func Propagate(ctx context.Context, limit *grmgr.Limiter, wg *sync.WaitGroup, pU
 							//ncc.RUnlock()
 							ncc.CachePurge()
 						}
-					}(py, v)
+					}(py, v, blimiter, &wgd)
 				} // by  ovfl block batch reader sends -> channel for each batch in ovfl blck
 				wgd.Wait()
 
@@ -322,13 +322,14 @@ func Propagate(ctx context.Context, limit *grmgr.Limiter, wg *sync.WaitGroup, pU
 		if !ptx.HasMutations() {
 			panic(fmt.Errorf("Propagate: for %s %s", pUID, ty))
 		}
-		err = ptx.Execute()
-		if err != nil {
-			panic(err)
-			if !strings.HasPrefix(err.Error(), "No mutations in transaction") {
-				elog.Add(logid, err)
-			}
-		}
+		time.Sleep(30 * time.Millisecond)
+		// err = ptx.Execute()
+		// if err != nil {
+		// 	panic(err)
+		// 	if !strings.HasPrefix(err.Error(), "No mutations in transaction") {
+		// 		elog.Add(logid, err)
+		// 	}
+		// }
 	}
 	if !found {
 		elog.Add(logid, fmt.Errorf("DP -  1:1 attribute not found for type %q in node %q ", ty, pUID))
@@ -339,16 +340,9 @@ func Propagate(ctx context.Context, limit *grmgr.Limiter, wg *sync.WaitGroup, pU
 	// Use Limit to determine recovery work/size. Indempotent mutation so safe.
 	if err != nil {
 		elog.Add(logid, err)
-		// update IX to E (errored) TODO: could create a Remove API
-		// etx := tx.New("IXFlag")
-		// etx.NewUpdate(tbl.Block).AddMember("PKey", pUID, mut.IsKey).AddMember("SortK", "A#A#T", mut.IsKey).AddMember("IX", "E")
-		// err = etx.Execute()
-		// if err != nil {
-		// 	elog.Add(logid, err)
-		// }
 		slog.LogAlert("Propagate", fmt.Sprintf("Propagate Errored : pUID %s  %s", pUID.Base64(), err.Error()))
 		panic(err)
 	}
-	//slog.LogAlert("Propagate", fmt.Sprintf("Finished loop : pUID %s ,   Ty %s", pUID.Base64(), ty))
+	slog.LogAlert("Propagate", fmt.Sprintf("Finished loop : pUID %s ,   Ty %s", pUID.Base64(), ty))
 
 }
