@@ -879,6 +879,59 @@ func TestSQLUpdateStaffFilter5(t *testing.T) {
 	}
 }
 
+// func TestSQLPaginate(t *testing.T) {
+
+// 	type Rec struct {
+// 		Id int
+// 		A  []byte
+// 		B  string
+// 		C  int
+// 		D  float64
+// 	}
+
+// 	var (
+// 		recs     []*Rec
+// 		tbl      = tbl.Name("test$Page")
+// 		err      error
+// 		pageSize = 5
+// 	)
+// 	// context is passed to all underlying mysql methods which will release db resources on main termination
+// 	ctx, cancel := context.WithCancel(context.Background())
+// 	defer cancel()
+
+// 	a := "B"
+// 	e := "H"
+// 	b := "AI"
+// 	c := 19
+
+// 	slog.Log("SQLUpdateStaff", "Here...")
+// 	mysql.Register(ctx, "mysql-GoGraph", os.Getenv("MYSQL")+"/GoGraph")
+// 	//select test,logdt,status,nodes from Log$GoTest;
+
+// 	txg := tx.NewQuery("query-test-label", tbl).DB("mysql-GoGraph").Prepare()
+// 	id := 0
+// 	for i := 0; i < 3; i++ {
+// 		txg.Select(&recs).Key("Id", id, "GT").Where(` A > ? and A < ? or (B >= ? and C < ? )`).Values(a, e, b, c+i).Limit(pageSize).OrderBy("Id")
+// 		err = txg.Execute()
+
+// 		if err != nil {
+// 			t.Errorf("Error: %s", err)
+// 		}
+// 		for i, v := range recs {
+// 			t.Logf("rec %d  %#v\n", i, v)
+// 		}
+
+// 		id = recs[len(recs)-1].Id
+// 		t.Log("\nNext page....")
+// 		recs = nil
+// 	}
+
+// 	if err != nil {
+// 		t.Errorf("Error: %s", err)
+// 	}
+
+// }
+
 func TestSQLPaginate(t *testing.T) {
 
 	type Rec struct {
@@ -904,7 +957,6 @@ func TestSQLPaginate(t *testing.T) {
 	b := "AI"
 	c := 19
 
-	slog.Log("SQLUpdateStaff", "Here...")
 	mysql.Register(ctx, "mysql-GoGraph", os.Getenv("MYSQL")+"/GoGraph")
 	//select test,logdt,status,nodes from Log$GoTest;
 
@@ -915,19 +967,22 @@ func TestSQLPaginate(t *testing.T) {
 		err = txg.Execute()
 
 		if err != nil {
-			t.Errorf("Error: %s", err)
+			break
 		}
 		for i, v := range recs {
 			t.Logf("rec %d  %#v\n", i, v)
 		}
-
+		if len(recs) == 0 {
+			break
+		}
+		t.Logf("len(recs %d", len(recs))
 		id = recs[len(recs)-1].Id
 		t.Log("\nNext page....")
 		recs = nil
 	}
 
 	if err != nil {
-		t.Logf("Error: %s", err)
+		t.Errorf("Error: %s", err)
 	}
 
 }

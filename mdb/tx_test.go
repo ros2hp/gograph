@@ -40,7 +40,7 @@ type Address struct {
 	Cntry               Country
 }
 
-func TestSelectx(t *testing.T) {
+func TestSelect(t *testing.T) {
 
 	type Input struct {
 		Status byte
@@ -91,6 +91,48 @@ func TestSelectSlice(t *testing.T) {
 	type Input struct {
 		Status byte
 		Person
+		Loc Address `mdb:"LocX"`
+	}
+
+	var x []Input
+	//x := Input{Status: 'C', Person: p, Loc: ad}
+
+	nn := tx.NewQuery("label", "table")
+	nn.Select(&x)
+
+	for k, v := range nn.GetAttr() {
+		t.Logf("%d: name: %s", k, v.Name())
+	}
+
+	for i := 0; i < 4; i++ {
+		for _, v := range nn.Split() {
+
+			switch x := v.(type) {
+			case *int:
+				*x = 234 * i
+				t.Logf("%d: int: [%d]", i, *x)
+			case *uint8:
+				*x = '$'
+				t.Logf("%d: uint8: [%d]", i, *x)
+			case *string:
+				*x = "abcdefg"
+				t.Logf("%d: String: [%s]", i, *x)
+			}
+		}
+	}
+}
+
+type Person2 struct {
+	FirstName string `mdb:"Fname"`
+	LastName  string
+	DOB       string
+}
+
+func TestSelectSlice2(t *testing.T) {
+
+	type Input struct {
+		Status byte
+		Person2
 		Loc Address
 	}
 
